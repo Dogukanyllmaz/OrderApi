@@ -36,8 +36,8 @@ namespace OrderApi.Application.DTOs.Conversions
 
                 new OrderDTO(
                     o.Id, 
-                    o.ProductId, 
                     o.ClientId, 
+                    o.ProductId, 
                     o.PurchaseQuantity, 
                     o.OrderedDate));
 

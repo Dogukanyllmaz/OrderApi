@@ -5,6 +5,7 @@ using OrderApi.Application.DTOs;
 using OrderApi.Application.DTOs.Conversions;
 using OrderApi.Application.Interfaces;
 using OrderApi.Application.Services;
+using OrderApi.Domain.Entities;
 
 namespace OrderApi.Presentation.Controllers
 {
@@ -12,15 +13,31 @@ namespace OrderApi.Presentation.Controllers
     [ApiController]
     public class OrdersController(IOrder orderInterface, IOrderService orderService) : ControllerBase
     {
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrders()
         {
             var orders = await orderInterface.GetAllAsync();
+
             if (!orders.Any())
                 return NotFound("No order detected in the database");
             var (_, list) = OrderConversion.FromEntity(null, orders);
             return !list!.Any() ? NotFound() : Ok(list);
+            /*IEnumerable<Order> orders;
+            try
+            {
+                orders = await orderInterface.GetAllAsync();
+            }
+            catch
+            {
+                // DB hatası ya da tablo eksik olsa bile boş liste olarak devam et
+                orders = Enumerable.Empty<Order>();
+            }
+
+            if (!orders.Any())
+                return NotFound("No order detected in the database");
+
+            var (_, list) = OrderConversion.FromEntity(null, orders);
+            return Ok(list);*/
         }
 
         [HttpGet("{id:int}")]

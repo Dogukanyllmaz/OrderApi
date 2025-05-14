@@ -1,5 +1,6 @@
 using OrderApi.Infrastructure.DependencyInjection;
 using OrderApi.Application.DependencyInjection;
+using eCommerceSharedLibrary.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
