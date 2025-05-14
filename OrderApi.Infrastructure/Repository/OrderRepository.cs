@@ -37,7 +37,7 @@ namespace OrderApi.Infrastructure.Repository
                     return new Response(false, "Order not found");
 
                 context.Orders.Remove(entity);
-                await.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return new Response(true, "Order successfully deleted");
             }
             catch (Exception ex)

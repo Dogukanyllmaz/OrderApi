@@ -31,10 +31,15 @@ namespace OrderApi.Application.DTOs.Conversions
             }
 
             if (orders is not null || order is null)
-            {
+            { 
                 var _orders = orders!.Select(o =>
 
-                new OrderDTO(o.Id, o.ProductId, o.ClientId, o.PurchaseQuantity, o.OrderedDate));
+                new OrderDTO(
+                    o.Id, 
+                    o.ProductId, 
+                    o.ClientId, 
+                    o.PurchaseQuantity, 
+                    o.OrderedDate));
 
                 return (null, _orders);
             }
