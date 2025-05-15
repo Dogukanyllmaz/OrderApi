@@ -1,4 +1,5 @@
 ﻿using eCommerceSharedLibrary.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderApi.Application.DTOs;
@@ -11,6 +12,7 @@ namespace OrderApi.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrdersController(IOrder orderInterface, IOrderService orderService) : ControllerBase
     {
         [HttpGet]
@@ -22,22 +24,6 @@ namespace OrderApi.Presentation.Controllers
                 return NotFound("No order detected in the database");
             var (_, list) = OrderConversion.FromEntity(null, orders);
             return !list!.Any() ? NotFound() : Ok(list);
-            /*IEnumerable<Order> orders;
-            try
-            {
-                orders = await orderInterface.GetAllAsync();
-            }
-            catch
-            {
-                // DB hatası ya da tablo eksik olsa bile boş liste olarak devam et
-                orders = Enumerable.Empty<Order>();
-            }
-
-            if (!orders.Any())
-                return NotFound("No order detected in the database");
-
-            var (_, list) = OrderConversion.FromEntity(null, orders);
-            return Ok(list);*/
         }
 
         [HttpGet("{id:int}")]
